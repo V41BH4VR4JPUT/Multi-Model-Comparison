@@ -2,9 +2,9 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from models.model_loader import get_model_reports, get_model_metrics
-from models_db import ModelMetrics
-from database import SessionLocal
+from Backend.models.model_loader import get_model_reports, get_model_metrics
+from Backend.models_db import ModelMetrics
+from Backend.database import SessionLocal
 import pandas as pd
 import os
 
@@ -44,8 +44,15 @@ def get_models():
 
 # Get metrics from CSV
 @app.get("/api/metrics")
-def get_metrics():
-    return get_model_metrics()
+def get_metrics(db: Session = Depends(get_db)):
+    try:
+        metrics = db.query(ModelMetrics).all()
+        if not metrics:
+            raise HTTPException(status_code=404, detail="No metrics found in the database.")
+        return metrics
+    except Exception as e:
+        print(f"🔥 ERROR in /metrics: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 # Get classification report for a specific model
 @app.get("/api/reports/{model_name}")

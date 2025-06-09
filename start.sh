@@ -1,6 +1,7 @@
 # Start FastAPI backend
 if [ "$1" = "backend" ]; then
-    uvicorn Backend.main:app --host 0.0.0.0 --port 8000 --reload
+    cd Backend
+    uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 # Start Streamlit frontend
 elif [ "$1" = "frontend" ]; then

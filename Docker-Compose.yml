@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["bash", "start.sh"]
+    command: ["bash", "start.sh", "backend"]
     volumes:
       - .:/app
     env_file:
@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["bash", "start.sh"]
+    command: ["bash", "start.sh", "frontend"]
     volumes:
       - .:/app
     ports:
