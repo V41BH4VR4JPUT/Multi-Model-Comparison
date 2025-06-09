@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - backend.env
+    volumes:
+      - .:/app
+    command: ["bash", "start.sh", "backend"]
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: streamlit-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    volumes:
+      - .:/app
+    command: ["bash", "start.sh", "frontend"]
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: model_metrics_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
