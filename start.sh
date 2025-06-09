@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Start FastAPI backend
 if [ "$1" = "backend" ]; then
     uvicorn Backend.main:app --host 0.0.0.0 --port 8000 --reload
