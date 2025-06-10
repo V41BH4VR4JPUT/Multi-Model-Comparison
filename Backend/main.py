@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from Backend.models.model_loader import get_model_reports, get_model_metrics
+from .models.model_loader import get_model_reports, get_model_metrics
 from Backend.models_db import ModelMetrics
 from Backend.database import SessionLocal
 import pandas as pd
