@@ -7,7 +7,7 @@ from Backend.models_db import ModelMetrics
 from Backend.database import SessionLocal
 import pandas as pd
 import os
-
+from pydantic import BaseModel
 # Initialize FastAPI app
 app = FastAPI()
 
@@ -69,9 +69,16 @@ def get_report(model_name: str):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 # Store model metrics into PostgreSQL
+class MetricInput(BaseModel):
+    Model: str
+    Accuracy: float
+    Precision: float
+    Recall: float
+    F1_Score: float
+
 @app.post("/api/store-metrics")
-def store_metrics(metrics: dict, db: Session = Depends(get_db)):
-    model_name = metrics.get("Model")
+def store_metrics(metrics: MetricInput, db: Session = Depends(get_db)):
+    model_name = metrics.Model
     existing = db.query(ModelMetrics).filter(ModelMetrics.model_name == model_name).first()
     
     if existing:
@@ -79,15 +86,14 @@ def store_metrics(metrics: dict, db: Session = Depends(get_db)):
 
     record = ModelMetrics(
         model_name=model_name,
-        accuracy=metrics.get("Accuracy"),
-        precision=metrics.get("Precision"),
-        recall=metrics.get("Recall"),
-        f1_score=metrics.get("F1-Score"),
+        accuracy=metrics.Accuracy,
+        precision=metrics.Precision,
+        recall=metrics.Recall,
+        f1_score=metrics.F1_Score,
     )
     db.add(record)
     db.commit()
     return {"status": "success"}
-
 # Fetch all metrics from PostgreSQL
 @app.get("/api/db-metrics")
 def get_all_metrics(db: Session = Depends(get_db)):

@@ -13,3 +13,4 @@ RUN pip install -r requirements.txt
 
 # Default command (overridden by docker-compose)
 CMD ["bash", "start.sh"]
+# CMD ["python","-m", "Backend.main"]
