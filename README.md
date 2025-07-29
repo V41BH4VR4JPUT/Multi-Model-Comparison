@@ -221,31 +221,4 @@ DB_NAME=modelmetrics
 
 ---
 
-## 🚩 Future Improvements
 
-* Add model explainability (SHAP/ELI5)
-* Upload new datasets/models from dashboard
-* User login and metric filtering
-* Deploy on cloud (AWS/GCP/Render)
-
----
-
-## ✨ Conclusion
-
-This project gives you an end-to-end scalable framework for:
-
-* Evaluating multiple classification models
-* Hyperparameter tuning with Optuna
-* Storing metrics to a centralized DB
-* Creating dashboards for interactive visualization
-
-Ideal for ML engineers, data scientists, or hackathon participants who need quick, robust model comparison pipelines.
-
----
-
-## 📅 Maintainer
-
-**Vaibhav Rajput**
-*AI/ML Developer | Final Year CSE | Open to collaboration*
-
-Feel free to contribute or raise issues!
